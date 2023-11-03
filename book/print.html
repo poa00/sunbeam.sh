@@ -1,0 +1,1283 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js oranda-dark">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sunbeam Documentation</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Generate complex TUIs from simple scripts written in any language.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="oranda-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "oranda-dark" : "oranda-dark";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('orandamdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('orandamdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('orandamdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('oranda-dark')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">User Guide</li><li class="chapter-item expanded "><a href="user-guide/installation.html"><strong aria-hidden="true">1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="user-guide/quickstart.html"><strong aria-hidden="true">2.</strong> Quickstart</a></li><li class="chapter-item expanded "><a href="user-guide/integrations.html"><strong aria-hidden="true">3.</strong> Integrations</a></li><li class="chapter-item expanded affix "><li class="part-title">Developer Guide</li><li class="chapter-item expanded "><a href="developer-guide/script-extensions.html"><strong aria-hidden="true">4.</strong> Writing your first Extension</a></li><li class="chapter-item expanded "><a href="developer-guide/leveraging-shebangs.html"><strong aria-hidden="true">5.</strong> Leveraging Shebangs</a></li><li class="chapter-item expanded "><a href="developer-guide/handling-dependencies.html"><strong aria-hidden="true">6.</strong> Handling Dependencies</a></li><li class="chapter-item expanded affix "><li class="part-title">Reference</li><li class="chapter-item expanded "><a href="reference/schemas/config.html"><strong aria-hidden="true">7.</strong> Config</a></li><li class="chapter-item expanded "><a href="reference/schemas/index.html"><strong aria-hidden="true">8.</strong> Schema</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="reference/schemas/manifest.html"><strong aria-hidden="true">8.1.</strong> Manifest</a></li><li class="chapter-item expanded "><a href="reference/schemas/list.html"><strong aria-hidden="true">8.2.</strong> List</a></li><li class="chapter-item expanded "><a href="reference/schemas/detail.html"><strong aria-hidden="true">8.3.</strong> Detail</a></li><li class="chapter-item expanded "><a href="reference/schemas/action.html"><strong aria-hidden="true">8.4.</strong> Action</a></li></ol></li><li class="chapter-item expanded "><a href="reference/cli.html"><strong aria-hidden="true">9.</strong> CLI</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="alternatives.html"><strong aria-hidden="true">10.</strong> Alternatives</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="oranda-dark">Axo Dark</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="oranda-light">Axo Light</button></li>
+
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Sunbeam Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/pomdtr/sunbeam" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="intro"><a class="header" href="#intro">Intro</a></h1>
+<p>Sunbeam is a TUI framework for creating keyboard-driven applications from simple scripts.</p>
+<script async id="asciicast-614506" src="https://asciinema.org/a/614506.js"></script>
+<p>You can think of it as a mix between an application launcher like <a href="https://raycast.com">raycast</a> or <a href="https://github.com/davatorium/rofi">rofi</a> and a fuzzy-finder like <a href="https://github.com/junegunn/fzf">fzf</a> or <a href="https://github.com/nvim-telescope/telescope.nvim">telescope</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<h2 id="requirements"><a class="header" href="#requirements">Requirements</a></h2>
+<ul>
+<li>sh (used as an interpreter for most extensions)</li>
+<li>git (used to install extensions from git repositories)</li>
+</ul>
+<h2 id="installation-1"><a class="header" href="#installation-1">Installation</a></h2>
+<p>You can use a package manager</p>
+<pre><code class="language-bash"># using brew (macOS / Linux)
+brew install pomdtr/tap/sunbeam
+
+# using scoop (Windows)
+scoop bucket add pomdtr https://github.com/pomdtr/scoop-bucket.git
+scoop install pomdtr/sunbeam
+
+# install script
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/pomdtr/sunbeam/releases/latest/download/install.sh | sh
+
+# from source
+go install github.com/pomdtr/sunbeam@latest
+
+# usign eget (https://github.com/zyedidia/eget)
+eget install pomdtr/sunbeam --pre-release
+</code></pre>
+<p>or use binaries / packages from the <a href="https://github.com/pomdtr/sunbeam/releases/latest">releases page</a>.</p>
+<h2 id="completions"><a class="header" href="#completions">Completions</a></h2>
+<p>Sunbeam supports completions for bash, zsh, fish and powershell. If you installed sunbeam using a package manager, the completions should be installed automatically. Otherwise, you can install them manually.</p>
+<p>Run <code>sunbeam completion &lt;shell&gt; --help</code> to list the available options.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="using-sunbeam"><a class="header" href="#using-sunbeam">Using Sunbeam</a></h1>
+<h2 id="installing-extensions"><a class="header" href="#installing-extensions">Installing Extensions</a></h2>
+<p>A fresh install of sunbeam is quite boring. In order to make it useful, you need to add some extensions.</p>
+<p>You can manage your extensions using the <code>sunbeam extension</code> command.</p>
+<p>Sunbeam extensions are just shell scripts. You can install an extension by running <code>sunbeam extension install &lt;path-or-url&gt;</code>.</p>
+<p>For example, to install the <a href="https://github.com/pomdtr/sunbeam/tree/main/catalog/extensions/devdocs.sh">devdocs extension</a>, run:</p>
+<pre><code class="language-sh">sunbeam extension install https://github.com/pomdtr/sunbeam/tree/main/catalog/extensions/devdocs.sh
+</code></pre>
+<blockquote>
+<p>⚠️ Extensions are not verified, nor sandboxed. They can do anything you can do on your computer. Make sure you trust the source before installing an extension.</p>
+</blockquote>
+<p>Other managements commands are available:</p>
+<ul>
+<li><code>sunbeam extension list</code> -&gt; list installed extensions</li>
+<li><code>sunbeam extension remove</code> -&gt; uninstall an extension</li>
+<li><code>sunbeam extension rename</code> -&gt; rename an extension</li>
+<li><code>sunbeam extension upgrade</code> -&gt; upgrade an extension</li>
+</ul>
+<h2 id="running-commands"><a class="header" href="#running-commands">Running Commands</a></h2>
+<p>If you run <code>sunbeam</code> without any arguments, it will open the default view, which is a list of all the available commands.</p>
+<p>You can also run a command directly using <code>sunbeam &lt;extension&gt; [command]</code>.<br />
+For example, <code>sunbeam devdocs list-docsets</code> will open the devdocs extension.</p>
+<p>You can also pass parameters to the command using <code>sunbeam &lt;extension&gt; [command] --param1 value1 --param2 value2</code>. <br />
+For example, <code>sunbeam devdocs list-entries --docset go</code> will list all the entries in the go docset.</p>
+<h2 id="using-the-sunbeam-ui"><a class="header" href="#using-the-sunbeam-ui">Using the Sunbeam UI</a></h2>
+<p>Sunbeam is designed to be used with your keyboard. Depending on the current view, multiple keyboard shortcuts are available:</p>
+<ul>
+<li>all views:
+<ul>
+<li><code>ctrl+r</code> -&gt; refresh the current view</li>
+<li><code>ctrl+c</code> -&gt; exit sunbeam</li>
+<li><code>escape</code> -&gt; go back to the previous page</li>
+</ul>
+</li>
+<li>list view:
+<ul>
+<li><code>up</code> / <code>ctrl+k</code> -&gt; move selection up</li>
+<li><code>down</code> / <code>ctrl+j</code> -&gt; move selection down</li>
+<li><code>enter</code> -&gt; execute the selected command</li>
+<li><code>tab</code> -&gt; show the available actions for the selected item</li>
+</ul>
+</li>
+<li>detail view:
+<ul>
+<li><code>up</code>, <code>k</code> -&gt; scroll one line up</li>
+<li><code>down</code>, <code>j</code> -&gt; scroll one line down</li>
+<li><code>ctrl+u</code> -&gt; scroll half a page up</li>
+<li><code>ctrl+d</code> -&gt; scroll half a page down</li>
+<li><code>q</code> -&gt; exit sunbeam</li>
+<li><code>tab</code> -&gt; show the available actions</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="integrations"><a class="header" href="#integrations">Integrations</a></h1>
+<p>Sunbeam is a terminal-based application, so it can be integrated with any terminal, multiplexer or editor.</p>
+<p>Here is a non-exhaustive list of integrations. If you have an integration you would like to share, feel free to open a PR.</p>
+<h2 id="terminals"><a class="header" href="#terminals">Terminals</a></h2>
+<h3 id="hyper-recommended"><a class="header" href="#hyper-recommended">Hyper (recommended)</a></h3>
+<p><a href="https://hyper.is/">Hyper</a> is a cross-platform terminal emulator, built on web technologies.</p>
+<p>Hyper is highly extensible, making it a great host for sunbeam.</p>
+<p>You can use the <a href="https://www.npmjs.com/package/hyper-sunbeam">sunbeam plugin</a> to make hyper behave as an application launcher.
+The plugin has been tested on macOS, but it should work on other platforms as well.</p>
+<p>Here is an example config:</p>
+<pre><code class="language-js">&quot;use strict&quot;;
+// See https://hyper.is#cfg for all currently supported options.
+module.exports = {
+    config: {
+        fontSize: 13,
+        padding: '10px 0px 5px 5px',
+        shell: '/opt/homebrew/bin/fish', // set this to your shell
+        shellArgs: ['--login', '-c', 'sunbeam'],
+        env: {
+            &quot;EDITOR&quot;: &quot;vim&quot;,
+        },
+        windowSize: [600, 350],
+        modifierKeys: {
+            altIsMeta: true
+        },
+        sunbeam: {
+            hotkey: 'Alt+Super+Space', // tweak this to your liking
+        }
+    },
+    // a list of plugins to fetch and install from npm
+    plugins: [
+        &quot;hyper-sunbeam&quot;, // transform hyper into a launcher
+        &quot;hyperminimal&quot;, // strip title bar
+        &quot;hyperborder&quot;, // add a gradient border around the window
+    ]
+};
+//# sourceMappingURL=config-default.js.map
+</code></pre>
+<h3 id="alacritty"><a class="header" href="#alacritty">Alacritty</a></h3>
+<p><a href="https://github.com/alacritty/alacritty">Alacritty</a> is a cross-platform terminal emulator.</p>
+<p>Alacritty is not easily extensible, so you will have to handle the application launcher features yourself (hotkey, centering, blur, ect.).</p>
+<p>It is a good choice if you are already using tiling window manager, as they usually allow you to setup an hotkey to launch a program, and to center it on the screen.</p>
+<p>Use this config as a starting point:</p>
+<pre><code class="language-yml">shell:
+  program: /bin/bash # set this to your shell
+  args: [&quot;-lic&quot;, &quot;sunbeam&quot;]
+
+window:
+  opacity: 0.9
+  decorations: buttonless
+  dimensions:
+    columns: 90
+    lines: 23
+
+  option_as_alt: Both
+  padding:
+    x: 10
+    y: 10
+
+font:
+  size: 13.0
+</code></pre>
+<p>If you don't plan to use Alacritty as your primary terminal, you can just save it as <code>~/.config/alacritty/alacritty.yml</code>.
+Otherwise, use the <code>config-file</code> flag when launching alacritty: <code>alacritty --config-file ~/.config/alacritty/sunbeam.yml</code>.</p>
+<h2 id="multiplexers"><a class="header" href="#multiplexers">Multiplexers</a></h2>
+<p>Sunbeam can easily be integrated with terminal multiplexers like tmux or zellij.</p>
+<h3 id="tmux"><a class="header" href="#tmux">tmux</a></h3>
+<pre><code class="language-sh">tmux popup -E sunbeam # open sunbeam in a popup
+tmux display-popup -E sunbeam devdocs list-docsets # list devdocs docsets in a popup
+</code></pre>
+<p>To bind it to a key, add this line to your tmux config:</p>
+<pre><code class="language-tmux">bind-key -n C-Space display-popup -E sunbeam
+</code></pre>
+<h3 id="zellij"><a class="header" href="#zellij">zellij</a></h3>
+<pre><code class="language-sh">zellij run --floating --close-on-exit -- htop
+</code></pre>
+<p>Binding this command to a key is not supported yet, as zellij <a href="https://github.com/zellij-org/zellij/discussions/2518">does not support floating panes in its config file yet</a>.</p>
+<h2 id="editors"><a class="header" href="#editors">Editors</a></h2>
+<h3 id="visual-studio-code"><a class="header" href="#visual-studio-code">Visual Studio Code</a></h3>
+<p>Run the <code>Tasks: Open User Tasks</code> item from the command palette, then paste the following text:</p>
+<pre><code class="language-json">{
+    &quot;version&quot;: &quot;2.0.0&quot;,
+    &quot;tasks&quot;: [
+        {
+            &quot;type&quot;: &quot;shell&quot;,
+            &quot;label&quot;: &quot;sunbeam&quot;,
+            &quot;command&quot;: &quot;sunbeam&quot;,
+            &quot;presentation&quot;: {
+                &quot;echo&quot;: false,
+                &quot;focus&quot;: true,
+                &quot;close&quot;: true
+            }
+        }
+    ]
+}
+</code></pre>
+<p>Then run the <code>Preferences: Open Default Keyboard Shortcuts (JSON)</code> command and add the following keybinding to the list:</p>
+<pre><code class="language-json">{
+    &quot;key&quot;: &quot;ctrl+alt+p&quot;,
+    &quot;command&quot;: &quot;workbench.action.tasks.runTask&quot;,
+    &quot;args&quot;: &quot;sunbeam&quot;
+}
+</code></pre>
+<p>Trigger the keybinding and you should see the sunbeam menu appear in the terminal panel.</p>
+<h3 id="kakoune"><a class="header" href="#kakoune">Kakoune</a></h3>
+<p>You can use the <a href="https://github.com/enricozb/popup.kak">popup.kak</a> plugin to show sunbeam in a popup.</p>
+<pre><code>evaluate-commands %sh{kak-popup init}
+
+define-command -override -params .. sunbeam %{ popup --title open -- sunbeam %arg{@} }
+
+map global user &lt;space&gt; ':sunbeam&lt;ret&gt;' -docstring &quot;Show Sunbeam&quot;
+</code></pre>
+<h3 id="vim--neovim"><a class="header" href="#vim--neovim">Vim / Neovim</a></h3>
+<p>Checkout the following plugins:</p>
+<ul>
+<li><a href="https://github.com/voldikss/vim-floaterm">floaterm</a></li>
+<li><a href="https://github.com/numToStr/FTerm.nvim">FTerm.nvim</a></li>
+<li><a href="https://github.com/akinsho/toggleterm.nvim">toggleterm.nvim</a></li>
+</ul>
+<p>or just use the <code>:terminal</code> command.</p>
+<h2 id="gui"><a class="header" href="#gui">GUI</a></h2>
+<p>A sunbeam GUI is in the works, but it is not ready yet.</p>
+<p>It will be close to the current hyper integration, but available as a standalone app.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="writing-your-extension"><a class="header" href="#writing-your-extension">Writing your Extension</a></h1>
+<h2 id="initial-setup"><a class="header" href="#initial-setup">Initial setup</a></h2>
+<p>To create a sunbeam extension, we only need a single script.</p>
+<h2 id="writing-the-manifest"><a class="header" href="#writing-the-manifest">Writing the manifest</a></h2>
+<p>When the script is called without arguments, it must return a json manifest describing the extension and its commands.</p>
+<p>We will use the <code>sunbeam query</code> command to generate this manifest.
+The <code>query</code> command allows you to manipulate json using the jq syntax.</p>
+<blockquote>
+<p>ℹ️ Sunbeam provides multiple helpers to make it easier to share sunbeam extensions, without requiring the user to install additional dependencies. An user running a sunbeam extension does not necessarily have jq installed on their system, but he probably has sunbeam installed 😛.</p>
+</blockquote>
+<p>If you are not familiar with jq, I recommend reading this tutorial: <a href="https://earthly.dev/blog/jq-select/">https://earthly.dev/blog/jq-select/</a></p>
+<p>Note that the script must be executable, and must have a shebang line at the top indicating the interpreter to use.</p>
+<pre><code class="language-sh">#!/bin/sh
+
+set -eu
+
+# When the number of arguments is 0, return the manifest
+if [ $# -eq 0 ]; then
+    sunbeam query -n '{
+        title: &quot;Devdocs&quot;,
+        description: &quot;Search the devdocs.io documentation&quot;,
+        commands: [
+            {
+                name: &quot;search-docsets&quot;,
+                title: &quot;Search docsets&quot;,
+                mode: &quot;list&quot;
+            }
+        ]
+    }'
+    exit 0
+fi
+
+echo &quot;Not implemented&quot; &gt;&amp;2
+exit 1
+</code></pre>
+<p>Here we define a single command named <code>search-docsets</code>, with a <code>view</code> mode.</p>
+<p>We can run our script to see the generated manifest:</p>
+<pre><code class="language-console">$ ./sunbeam-devdocs
+{
+  &quot;commands&quot;: [
+    {
+      &quot;mode&quot;: &quot;list&quot;,
+      &quot;name&quot;: &quot;search-docsets&quot;,
+      &quot;title&quot;: &quot;Search docsets&quot;
+    }
+  ],
+  &quot;description&quot;: &quot;Search the devdocs.io documentation&quot;,
+  &quot;title&quot;: &quot;Devdocs&quot;
+}
+</code></pre>
+<p>Or use sunbeam to see the generated command:</p>
+<pre><code class="language-console">$ sunbeam run ./sunbeam-devdocs --help
+Search the devdocs.io documentation
+
+Usage:
+  extension [flags]
+  extension [command]
+
+Available Commands:
+  search-docsets Search docsets
+
+Flags:
+  -h, --help   help for extension
+
+Use &quot;extension [command] --help&quot; for more information about a command.
+</code></pre>
+<h2 id="handling-commands"><a class="header" href="#handling-commands">Handling commands</a></h2>
+<p>When the user run a command, the script is called with the command name as first argument.</p>
+<p>Here the command name is <code>search-docsets</code>, and the command mode is <code>view</code>, so the script must return a view when called with this argument.</p>
+<p>We will use the <code>sunbeam fetch</code> command to fetch the list of docsets from the devdocs api. The <code>fetch</code> command allows you to perform http requests (with an api similar to curl).</p>
+<pre><code class="language-sh">#!/bin/sh
+
+set -eu
+
+# When the number of arguments is 0, return the manifest
+if [ $# -eq 0 ]; then
+    sunbeam query -n '{
+        title: &quot;Devdocs&quot;,
+        description: &quot;Search the devdocs.io documentation&quot;,
+        commands: [
+            {
+                name: &quot;search-docsets&quot;,
+                title: &quot;Search docsets&quot;,
+                mode: &quot;list&quot;
+            }
+        ]
+    }'
+    exit 0
+fi
+
+# extract the command name from the payload passed as first argument to the script
+COMMAND=$(echo &quot;$1&quot; | jq -r '.command')
+
+# When the command name is &quot;search-docsets&quot;, the list of docsets is returned
+if [ &quot;$COMMAND&quot; = &quot;search-docsets&quot; ]; then
+  sunbeam fetch https://devdocs.io/docs/docs.json | sunbeam query '{
+    items: map({
+      title: .name,
+      subtitle: (.release // &quot;latest&quot;),
+      accessories: [ .slug ],
+      actions: [
+        {
+            type: &quot;open&quot;,
+            title: &quot;Open in Browser&quot;,
+            target: &quot;https://devdocs.io/\(.slug)&quot;,
+            exit: true
+        }
+      ]
+    })
+  }'
+fi
+</code></pre>
+<p>Here we pipe the json catalog to the <code>query</code> command to transform it into a list, with each docset as an item. We also add an action to open the docset in the user default browser.</p>
+<p>Let's run our script to see the generated view:</p>
+<pre><code class="language-console">sunbeam run ./sunbeam-devdocs search-docsets
+</code></pre>
+<p>Note that since we only have one command, we can omit the command name:</p>
+<pre><code class="language-console">sunbeam run ./sunbeam-devdocs
+</code></pre>
+<h2 id="chaining-commands"><a class="header" href="#chaining-commands">Chaining Commands</a></h2>
+<p>This extension is still pretty basic. Sunbeam really shines when you start chaining commands together. Let's add a new command to search the documentation of a specific docset.</p>
+<pre><code class="language-sh">#!/bin/sh
+
+set -eu
+
+if [ $# -eq 0 ]; then
+    sunbeam query -n '{
+        title: &quot;Devdocs&quot;,
+        description: &quot;Search the devdocs.io documentation&quot;,
+        commands: [
+            {
+                name: &quot;search-docsets&quot;,
+                title: &quot;Search docsets&quot;,
+                mode: &quot;list&quot;
+            },
+            {
+                name: &quot;search-entries&quot;,
+                title: &quot;Search entries&quot;,
+                mode: &quot;list&quot;,
+                params: [
+                    {
+                        name: &quot;docset&quot;,
+                        type: &quot;string&quot;,
+                        required: true
+                    }
+                ]
+            }
+        ]
+    }'
+    exit 0
+fi
+
+COMMAND=$(echo &quot;$1&quot; | jq -r '.command')
+if [ &quot;$COMMAND&quot; = &quot;search-docsets&quot; ]; then
+    # ...
+elif [ &quot;$COMMAND&quot; = &quot;search-entries&quot; ]; then
+    # we extract the slug param from the payload
+    DOCSET=$(echo &quot;$1&quot; | sunbeam query -r '.params.docset')
+
+    sunbeam fetch &quot;https://devdocs.io/docs/$DOCSET/index.json&quot; | sunbeam query --arg docset=&quot;$DOCSET&quot; '.entries | {
+
+        items: map({
+            title: .name,
+            subtitle: .type,
+            actions: [
+                {
+                    title: &quot;Open in Browser&quot;,
+                    type: &quot;open&quot;,
+                    target: &quot;https://devdocs.io/\($docset)/\(.path)&quot;,
+                    exit: true
+                },
+                {
+                    type: &quot;copy&quot;,
+                    title: &quot;Copy URL&quot;,
+                    key: &quot;c&quot;,
+                    text: &quot;https://devdocs.io/\($docset)/\(.path)&quot;,
+                    exit: true
+                }
+            ]
+        })
+    }'
+fi
+</code></pre>
+<p>Here we add a new command named <code>search-entries</code>, with a <code>view</code> mode. We also add a <code>docset</code> parameter, which is required.</p>
+<p>When the user run this command, the script is called with the command name as first argument, and the parameters as json on stdin.</p>
+<p>If we run run <code>sunbeam run ./sunbeam-devdoc --help</code> again, we can see the new command:</p>
+<pre><code class="language-console">$ sunbeam run ./sunbeam-devdocs --help
+Search the devdocs.io documentation
+
+Usage:
+  extension [flags]
+  extension [command]
+
+Available Commands:
+  search-docsets Search docsets
+  search-entries Search entries
+
+Flags:
+  -h, --help   help for extension
+
+Use &quot;extension [command] --help&quot; for more information about a command.
+</code></pre>
+<p>Let's run the command to see the generated view:</p>
+<pre><code class="language-console">sunbeam run ./sunbeam-devdocs search-entries --docset=go
+</code></pre>
+<p>If you run the <code>search-entries</code> command without providing the <code>docset</code> parameter, a form will will be shown for you to fill the missing parameters.</p>
+<p>If we want to be able to go from the docsets list to the entries list, we can add <code>run</code> action to the docsets list:</p>
+<pre><code class="language-sh">#!/bin/sh
+
+set -eu
+
+# When the number of arguments is 0, return the manifest
+if [ $# -eq 0 ]; then
+    ...
+fi
+
+if [ &quot;$1&quot; = &quot;search-docsets&quot; ]; then
+    sunbeam fetch https://devdocs.io/docs/docs.json | sunbeam query '{
+        items: map({
+          title: .name,
+          subtitle: (.release // &quot;latest&quot;),
+          accessories: [ .slug ],
+          actions: [
+            {
+                type: &quot;run&quot;,
+                title: &quot;Search \(.name) entries&quot;,
+                command: &quot;search-entries&quot;,
+                params: {
+                    docset: .slug
+                }
+            },
+            {
+                type: &quot;open&quot;,
+                title: &quot;Open in Browser&quot;,
+                target: &quot;https://devdocs.io/\(.slug)&quot;,
+                exit: true
+            }
+          ]
+        })
+    }'
+elif [ &quot;$1&quot; = &quot;search-entries&quot; ]; then
+    # ...
+fi
+</code></pre>
+<p>Now we can start by listing the docsets, select the one we are interested in, and then search the entries of this docset.</p>
+<h2 id="installing-your-extension"><a class="header" href="#installing-your-extension">Installing your extension</a></h2>
+<p>Now that we have a working extension, we can install it using the <code>sunbeam extension install</code> command.</p>
+<pre><code class="language-console">sunbeam extension install ./sunbeam-devdocs
+sunbeam devdocs --help
+</code></pre>
+<p>Now we can run the extension from anywhere using the <code>sunbeam devdocs</code> command. The <code>devdocs</code> alias is based on the name of the script, stripped of the <code>sunbeam-</code> prefix if it exists. If you prefer, you can specify a custom alias using the <code>--alias</code> flag.</p>
+<pre><code class="language-console">sunbeam extension install ./sunbeam-devdocs --alias=dd
+sunbeam dd --help
+</code></pre>
+<p>The search-docsets command will also appears in the root list (only commands without required parameters are shown in the root list).</p>
+<p>Note that if you update the manifest of the extension, you will need to upgrade it using the <code>sunbeam extension upgrade</code> to see the changes.</p>
+<pre><code class="language-console">sunbeam extension upgrade devdocs
+</code></pre>
+<blockquote>
+<p>ℹ️ The source code of this extension is available here: <a href="https://github.com/pomdtr/sunbeam-devdocs/blob/main/sunbeam-extension">https://github.com/pomdtr/sunbeam-devdocs/blob/main/sunbeam-extension</a>. Use <code>sunbeam extension install https://raw.githubusercontent.com/pomdtr/sunbeam-extensions/main/extensions/devdocs.sh</code> to install it.</p>
+</blockquote>
+<h2 id="publishing-an-extension"><a class="header" href="#publishing-an-extension">Publishing an extension</a></h2>
+<p>Just create a git repository containing your extension, and push it to github. User will be able to install it using:</p>
+<pre><code class="language-console">sunbeam extension install &lt;raw-url&gt;
+</code></pre>
+<h2 id="make-your-extension-discoverable"><a class="header" href="#make-your-extension-discoverable">Make your extension discoverable</a></h2>
+<p>Add the <code>sunbeam</code> topic to your github repository to make it discoverable to all sunbeam users.</p>
+<p>Make sure to add a <code>README.md</code> file to your repository, so that users can learn more about your extensions before installing them.</p>
+<h2 id="whats-next"><a class="header" href="#whats-next">What's next?</a></h2>
+<p>Sunbeam provides a lot of additional features, like:</p>
+<ul>
+<li>displaying text content highlighted as ANSI or markdown using the <code>detail</code> mode</li>
+<li>Running tuis using the <code>tty</code> mode</li>
+<li>Refresh list items each time the query changes by setting the <code>dynamic</code> field to true in a <code>list</code> payload</li>
+<li>and more...</li>
+</ul>
+<p>This section of the documentation is still a work in progress, but you can already check out the <a href="https://github.com/pomdtr/sunbeam/tree/main/catalog">existing extensions</a> to see what's possible.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="leveraging-shebangs"><a class="header" href="#leveraging-shebangs">Leveraging Shebangs</a></h1>
+<p>Shebangs are a mechanism for specifying the interpreter to use to execute a script. You are probably already familiar with them, since they are commonly used in shell scripts.</p>
+<pre><code class="language-sh">#!/bin/sh
+
+echo &quot;Hello World&quot;
+</code></pre>
+<p>Sunbeam is not aware of the underlying interpreter, so you can use any language you want to write your scripts. For example, if you want to write your scripts in python, you can use the <code>#!/usr/bin/env python3</code> shebang.</p>
+<p>Let's write a hackernews extension using deno. Deno is an alternative runtime for javascript and typescript, which among other features allows you to easily write single-file scripts that use external dependencies.</p>
+<p>We will use the <code>#!/usr/bin/env -S deno run -A</code> shebang to run our script using deno. The <code>-S</code> splits the command into arguments.</p>
+<pre><code class="language-ts">#!/usr/bin/env deno run -A
+
+import Parser from &quot;npm:rss-parser&quot;;
+import { formatDistance } from &quot;npm:date-fns&quot;;
+import * as sunbeam from &quot;npm:sunbeam-types@0.23.15&quot;
+
+if (Deno.args.length == 0) {
+    const manifest: sunbeam.Manifest = {
+        title: &quot;Hacker News&quot;,
+        root: [
+            {
+                title: &quot;Front Page&quot;,
+                command: &quot;browse&quot;,
+                params: {
+                    topic: &quot;frontpage&quot;
+                }
+            },
+            {
+                title: &quot;Show HN&quot;,
+                command: &quot;browse&quot;,
+                params: {
+                    topic: &quot;show&quot;
+                }
+            }
+        ],
+        commands: [
+            {
+                name: &quot;browse&quot;,
+                title: &quot;Show a feed&quot;,
+                mode: &quot;list&quot;,
+                params: [
+                    { name: &quot;topic&quot;, description: &quot;Topic&quot;, required: true, type: &quot;string&quot; }
+                ],
+            },
+        ]
+    };
+
+    console.log(JSON.stringify(manifest));
+    Deno.exit(0);
+}
+
+const payload = JSON.parse(Deno.args[0]) as sunbeam.CommandInput;
+if (payload.command == &quot;browse&quot;) {
+    const { topic } = payload.params as { topic: string };
+    const feed = await new Parser().parseURL(`https://hnrss.org/${topic}?description=0&amp;count=25`);
+    const page: sunbeam.List = {
+        items: feed.items.map((item) =&gt; ({
+            title: item.title || &quot;&quot;,
+            subtitle: item.categories?.join(&quot;, &quot;) || &quot;&quot;,
+            accessories: item.isoDate
+                ? [
+                    formatDistance(new Date(item.isoDate), new Date(), {
+                        addSuffix: true,
+                    }),
+                ]
+                : [],
+            actions: [
+                {
+                    title: &quot;Open in browser&quot;,
+                    type: &quot;open&quot;,
+                    target: item.link || &quot;&quot;,
+                    exit: true
+                },
+                {
+                    title: &quot;Open Comments in Browser&quot;,
+                    type: &quot;open&quot;,
+                    target: item.guid || &quot;&quot;,
+                    exit: true
+                },
+                {
+                    title: &quot;Copy Link&quot;,
+                    type: &quot;copy&quot;,
+                    key: &quot;c&quot;,
+                    text: item.link || &quot;&quot;,
+                    exit: true
+                },
+            ],
+        })),
+    };
+
+    console.log(JSON.stringify(page));
+} else {
+    console.error(&quot;Unknown command&quot;);
+    Deno.exit(1);
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="handling-dependencies"><a class="header" href="#handling-dependencies">Handling Dependencies</a></h1>
+<p>Sunbeam extensions are just scripts, so you can use any language you want to write them.</p>
+<p>Sunebam provides multiple helpers to make it easier to share sunbeam extensions, without requiring the user to install additional dependencies.</p>
+<ul>
+<li><code>sunbeam query</code>: generate and transform json using the jq syntax.</li>
+<li><code>sunbeam fetch</code>: fetch a remote script using a subset of curl options.</li>
+<li><code>sunbeam open</code>: open an url or a file using the default application.</li>
+<li><code>sunbeam copy/paste</code>: copy/paste text from/to the clipboard</li>
+</ul>
+<p>You can already build a lot of things using just these helpers, but sometimes you need to use a library to do something more complex.
+In that case, consider dropping POSIX shell and using a more powerful language.</p>
+<h2 id="deno"><a class="header" href="#deno">Deno</a></h2>
+<p><a href="https://deno.land">Deno</a> is a secure runtime for javascript and typescript. It is an <a href="https://matklad.github.io/2023/02/12/a-love-letter-to-deno.html">excellent choice</a> for writing scripts that require external dependencies.</p>
+<p>Deno allows you to use any npm package by just importing it from a url. This makes it easy to use any library without requiring the user to install it first.</p>
+<pre><code class="language-ts">#!/usr/bin/env -S deno run -A
+
+import { lodash } from &quot;npm:lodash
+
+// ...
+</code></pre>
+<p>To make it easier to write extensions in deno, sunbeam provides a <a href="https://www.npmjs.com/package/sunbeam-types">npm package</a> that provides types for validating the manifest and payloads.</p>
+<h2 id="nix"><a class="header" href="#nix">Nix</a></h2>
+<p><a href="https://nixos.org">Nix</a> is a purely functional package manager. Among a ton of other things, it allows you to write portable scripts by leveraging shebangs.</p>
+<pre><code class="language-sh">#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p imagemagick cowsay
+
+# scale image by 50%
+convert &quot;$1&quot; -scale 50% &quot;$1.s50.jpg&quot; &amp;&amp;
+cowsay &quot;done $1.q50.jpg&quot;
+</code></pre>
+<p>See the <a href="https://nixos.wiki/wiki/Nix-shell_shebang">nix manual</a> for more information.</p>
+<p>This <a href="https://yukiisbo.red/notes/spice-up-with-nix-scripts/">blog post</a> also provides a good introduction to writing nix-powered scripts.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="config"><a class="header" href="#config">Config</a></h1>
+<p>The config will be searched in the following locations:</p>
+<ul>
+<li><code>SUNBEAM_CONFIG</code> environment variable if set</li>
+<li><code>XDG_CONFIG_HOME/sunbeam/config.json</code> if <code>XDG_CONFIG_HOME</code> is set</li>
+<li><code>$HOME/.config/sunbeam/config.json</code></li>
+</ul>
+<p>If no config is found, sunbeam will create one.</p>
+<pre><code class="language-json">{
+    // additional items to show in the root list
+    &quot;root&quot;: [
+        {
+            // title of the item shown in the list
+            &quot;title&quot;: &quot;Search Overreact Feed&quot;,
+            // command to run when the item is chosen
+            &quot;command&quot;: &quot;sunbeam rss show --url https://overreacted.io/rss.xml&quot;
+        },
+        {
+            &quot;title&quot;: &quot;View System Resources&quot;,
+            &quot;command&quot;: &quot;htop&quot;
+        }
+    ],
+    // env variables loaded by sunbeam before running extensions
+    &quot;env&quot;: {
+        &quot;GITHUB_TOKEN&quot;: &quot;ghp_xxx&quot;,
+        &quot;RAINDROP_TOKEN&quot;: &quot;xxx&quot;
+    },
+    // load env variables from a file
+    // relative paths are resolved from the config file location
+    &quot;envFile&quot;: &quot;secrets.env&quot;,
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><p>All the json shemas used for validation are located <a href="https://github.com/pomdtr/sunbeam/tree/main/pkg/schemas">here</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="manifest"><a class="header" href="#manifest">Manifest</a></h1>
+<p>The manifest is a JSON file that describes the extension.
+It contains the title, description and the list of commands provided by the extension.</p>
+<pre><code class="language-json">{
+  // the title of the extension, will be shown in the root list
+  &quot;title&quot;: &quot;DevDocs&quot;,
+  // the description of the extension, will be shown in usage string
+  &quot;description&quot;: &quot;Search DevDocs.io&quot;,
+  // additional items to show in the root list (optional)
+  &quot;root&quot;: [
+    {
+      &quot;title&quot;: &quot;Search Deno Docs&quot;,
+      &quot;command&quot;: &quot;list-entries&quot;,
+      &quot;params&quot;: {
+        &quot;slug&quot;: &quot;deno&quot;
+      }
+    }
+  ],
+  &quot;commands&quot;: [
+    {
+      // unique identifier of the command (required)
+      &quot;name&quot;: &quot;list-entries&quot;,
+      // the title of the command, will be shown in the root list (required)
+      &quot;title&quot;: &quot;List Entries from Docset&quot;,
+      // the mode of the command, can be &quot;list&quot;, &quot;detail&quot;, &quot;tty&quot;, &quot;silent&quot; (required)
+      // if you want to display a list of items, use the list mode
+      // if you want to display a detail view, use the detail mode
+      // use the tty mode if you want to use the terminal directly
+      // or use the silent mode if you don't want to display anything
+      &quot;mode&quot;: &quot;page&quot;,
+      // the list of parameters for the command (optional)
+      &quot;params&quot;: [
+        {
+          // unique identifier of the parameter (required)
+          &quot;name&quot;: &quot;slug&quot;,
+          // type of the parameter (required)
+          // can be &quot;string&quot;, &quot;number&quot;, or &quot;boolean&quot;
+          &quot;type&quot;: &quot;string&quot;,
+          // whether the parameter is required or not (default: false)
+          // if a a command has a required parameter, it will not be shown in the root list
+          &quot;required&quot;: false,
+          // description of the parameter (optional)
+          // will be shown in the usage string
+          &quot;description&quot;: &quot;docset to search&quot;,
+          // default value of the parameter (optional)
+          // the type of the default value must match the type of the parameter
+          &quot;default&quot;: &quot;go&quot;
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="list"><a class="header" href="#list">List</a></h1>
+<pre><code class="language-json">{
+    // the list of items to display (required)
+    &quot;items&quot;: [
+        {
+            // title of the item (required)
+            &quot;title&quot;: &quot;sunbeam&quot;,
+            // subtitle of the item (optional)
+            // will be displayed at the right of the title, in a faint color
+            &quot;subtitle&quot;: &quot;pomdtr&quot;,
+            // the list of accessories (optional)
+            // they will be displayed on the right side of the item
+            &quot;accessories&quot;: [
+                &quot;225 *&quot;,
+                &quot;public&quot;
+            ],
+            // unique identifier of the item (optional)
+            // if not set, the title will be used as id
+            &quot;id&quot;: &quot;pomdtr/sunbeam&quot;,
+            // the list of actions that can be performed on the item (optional)
+            &quot;actions&quot;: [
+                {
+                    &quot;title&quot;: &quot;Open in Browser&quot;,
+                    &quot;type&quot;: &quot;open&quot;,
+                    &quot;target&quot;: &quot;https://github.com/pomdtr/sunbeam&quot;
+                }
+            ]
+        }
+    ],
+    // whether the list is dynamic or not (optional)
+    // if true, the list will be refreshed every time the user types a character
+    &quot;dynamic&quot;: false,
+    // the text to display when the list is empty (optional)
+    &quot;emptyText&quot;: &quot;No items found&quot;,
+    // the list of actions shown when no item is selected (optional)
+    &quot;actions&quot;: [
+        {
+            &quot;title&quot;: &quot;Refresh Items&quot;,
+            &quot;type&quot;: &quot;reload&quot;
+        }
+    ]
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="detail"><a class="header" href="#detail">Detail</a></h1>
+<pre><code class="language-json">{
+    // the text to display (required)
+    &quot;text&quot;: &quot;# Sunbeam\n\n***the love child of raycast and fzf***&quot;,
+    // highlighter to use (optional, default: &quot;ansi&quot;)
+    // Can be &quot;markdown&quot; or &quot;ansi&quot;
+    &quot;highlight&quot;: &quot;markdown&quot;,
+    // the list of actions that can be performed on the view (optional)
+    &quot;actions&quot;: [
+        {
+            &quot;title&quot;: &quot;Open Sunbeam Website&quot;,
+            &quot;type&quot;: &quot;open&quot;,
+            &quot;target&quot;: &quot;https://pomdtr.github.io/sunbeam&quot;
+        }
+    ]
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="command"><a class="header" href="#command">Command</a></h1>
+<h2 id="copy"><a class="header" href="#copy">Copy</a></h2>
+<p>Copy text to the clipboard.</p>
+<pre><code class="language-json">{
+    // the title of the action (required)
+    &quot;title&quot;: &quot;Copy&quot;,
+    // the key to trigger the action (optional)
+    &quot;key&quot;: &quot;c&quot;,
+    // the type of the action (required)
+    &quot;type&quot;: &quot;copy&quot;,
+    // the text to copy (required)
+    &quot;text&quot;: &quot;hello world&quot;,
+    // whether to exit sunbeam after copying the text (optional)
+    // if not specified, sunbeam will not exit
+    &quot;exit&quot;: true
+}
+</code></pre>
+<h2 id="open"><a class="header" href="#open">Open</a></h2>
+<p>Open a url or a file with the default app or a specific app.</p>
+<pre><code class="language-json">{
+
+    // the title of the action (required)
+    &quot;title&quot;: &quot;Open&quot;,
+    // the key to trigger the action (optional)
+    &quot;key&quot;: &quot;o&quot;,
+    // the title of the action (required)
+    &quot;type&quot;: &quot;open&quot;,
+    // the target to open (required)
+    // target can be a url or a path to a file
+    &quot;target&quot;: &quot;https://pomdtr.github.io/sunbeam&quot;,
+    // the app to use to open the target (optional)
+    // if not specified, the default app will be used
+    &quot;app&quot;: {
+        &quot;windows&quot;: &quot;chrome&quot;,
+        &quot;macos&quot;: &quot;google chrome&quot;,
+        &quot;linux&quot;: &quot;google-chrome&quot;
+    },
+    // whether to exit sunbeam after opening the target (optional)
+    // if not specified, sunbeam will not exit
+    &quot;exit&quot;: true
+}
+</code></pre>
+<h2 id="run"><a class="header" href="#run">Run</a></h2>
+<p>Run a custom command defined in the extension manifest.</p>
+<pre><code class="language-json">{
+    // the title of the action (required)
+    &quot;tit // key must match the name of the param of the edit-readme commandle&quot;: &quot;View Readme&quot;,
+    // the key to trigger the action (optional)
+    &quot;key&quot;: &quot;v&quot;,
+    // the type of the action (required)
+    &quot;type&quot;: &quot;run&quot;,
+    // the command to run (must be defined in the extension manifest) (required)
+    &quot;command&quot;: &quot;edit-readme&quot;,
+    // the arguments to pass to the command (optional)
+    // you can either pass a string, number or boolean
+    &quot;params&quot;: {
+        // key must match the name of the param of the edit-readme command
+        &quot;full_name&quot;: &quot;pomdtr/sunbeam&quot;
+    },
+}
+</code></pre>
+<h2 id="reload"><a class="header" href="#reload">Reload</a></h2>
+<p>Reload the current view.</p>
+<pre><code class="language-json">{
+    // the title of the action (required)
+    &quot;title&quot;: &quot;Reload&quot;,
+    // the key to trigger the action (optional)
+    &quot;key&quot;: &quot;r&quot;,
+    // the type of the action (required)
+    &quot;type&quot;: &quot;reload&quot;,
+    // override the current params (optional)
+    &quot;params&quot;: {
+        &quot;full_name&quot;: &quot;pomdtr/sunbeam&quot; // key must match the name of the param
+    }
+}
+</code></pre>
+<h2 id="exit"><a class="header" href="#exit">Exit</a></h2>
+<p>Exit sunbeam.</p>
+<pre><code class="language-json">{
+    // the title of the action (required)
+    &quot;title&quot;: &quot;Exit&quot;,
+    // the key to trigger the action (optional)
+    &quot;key&quot;: &quot;q&quot;,
+    // the type of the action (required)
+    &quot;type&quot;: &quot;exit&quot;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="sunbeam"><a class="header" href="#sunbeam">sunbeam</a></h2>
+<p>Command Line Launcher</p>
+<h3 id="synopsis"><a class="header" href="#synopsis">Synopsis</a></h3>
+<p>Sunbeam is a command line launcher for your terminal, inspired by fzf and raycast.</p>
+<p>See https://pomdtr.github.io/sunbeam for more information.</p>
+<pre><code>sunbeam [flags]
+</code></pre>
+<h3 id="options"><a class="header" href="#options">Options</a></h3>
+<pre><code>  -h, --help   help for sunbeam
+</code></pre>
+<h2 id="sunbeam-completion"><a class="header" href="#sunbeam-completion">sunbeam completion</a></h2>
+<p>Generate the autocompletion script for the specified shell</p>
+<h3 id="synopsis-1"><a class="header" href="#synopsis-1">Synopsis</a></h3>
+<p>Generate the autocompletion script for sunbeam for the specified shell.
+See each sub-command's help for details on how to use the generated script.</p>
+<h3 id="options-1"><a class="header" href="#options-1">Options</a></h3>
+<pre><code>  -h, --help   help for completion
+</code></pre>
+<h2 id="sunbeam-completion-bash"><a class="header" href="#sunbeam-completion-bash">sunbeam completion bash</a></h2>
+<p>Generate the autocompletion script for bash</p>
+<h3 id="synopsis-2"><a class="header" href="#synopsis-2">Synopsis</a></h3>
+<p>Generate the autocompletion script for the bash shell.</p>
+<p>This script depends on the 'bash-completion' package.
+If it is not installed already, you can install it via your OS's package manager.</p>
+<p>To load completions in your current shell session:</p>
+<pre><code>source &lt;(sunbeam completion bash)
+</code></pre>
+<p>To load completions for every new session, execute once:</p>
+<h4 id="linux"><a class="header" href="#linux">Linux:</a></h4>
+<pre><code>sunbeam completion bash &gt; /etc/bash_completion.d/sunbeam
+</code></pre>
+<h4 id="macos"><a class="header" href="#macos">macOS:</a></h4>
+<pre><code>sunbeam completion bash &gt; $(brew --prefix)/etc/bash_completion.d/sunbeam
+</code></pre>
+<p>You will need to start a new shell for this setup to take effect.</p>
+<pre><code>sunbeam completion bash
+</code></pre>
+<h3 id="options-2"><a class="header" href="#options-2">Options</a></h3>
+<pre><code>  -h, --help              help for bash
+      --no-descriptions   disable completion descriptions
+</code></pre>
+<h2 id="sunbeam-completion-fish"><a class="header" href="#sunbeam-completion-fish">sunbeam completion fish</a></h2>
+<p>Generate the autocompletion script for fish</p>
+<h3 id="synopsis-3"><a class="header" href="#synopsis-3">Synopsis</a></h3>
+<p>Generate the autocompletion script for the fish shell.</p>
+<p>To load completions in your current shell session:</p>
+<pre><code>sunbeam completion fish | source
+</code></pre>
+<p>To load completions for every new session, execute once:</p>
+<pre><code>sunbeam completion fish &gt; ~/.config/fish/completions/sunbeam.fish
+</code></pre>
+<p>You will need to start a new shell for this setup to take effect.</p>
+<pre><code>sunbeam completion fish [flags]
+</code></pre>
+<h3 id="options-3"><a class="header" href="#options-3">Options</a></h3>
+<pre><code>  -h, --help              help for fish
+      --no-descriptions   disable completion descriptions
+</code></pre>
+<h2 id="sunbeam-completion-help"><a class="header" href="#sunbeam-completion-help">sunbeam completion help</a></h2>
+<p>Help about any command</p>
+<h3 id="synopsis-4"><a class="header" href="#synopsis-4">Synopsis</a></h3>
+<p>Help provides help for any command in the application.
+Simply type completion help [path to command] for full details.</p>
+<pre><code>sunbeam completion help [command] [flags]
+</code></pre>
+<h3 id="options-4"><a class="header" href="#options-4">Options</a></h3>
+<pre><code>  -h, --help   help for help
+</code></pre>
+<h2 id="sunbeam-completion-powershell"><a class="header" href="#sunbeam-completion-powershell">sunbeam completion powershell</a></h2>
+<p>Generate the autocompletion script for powershell</p>
+<h3 id="synopsis-5"><a class="header" href="#synopsis-5">Synopsis</a></h3>
+<p>Generate the autocompletion script for powershell.</p>
+<p>To load completions in your current shell session:</p>
+<pre><code>sunbeam completion powershell | Out-String | Invoke-Expression
+</code></pre>
+<p>To load completions for every new session, add the output of the above command
+to your powershell profile.</p>
+<pre><code>sunbeam completion powershell [flags]
+</code></pre>
+<h3 id="options-5"><a class="header" href="#options-5">Options</a></h3>
+<pre><code>  -h, --help              help for powershell
+      --no-descriptions   disable completion descriptions
+</code></pre>
+<h2 id="sunbeam-completion-zsh"><a class="header" href="#sunbeam-completion-zsh">sunbeam completion zsh</a></h2>
+<p>Generate the autocompletion script for zsh</p>
+<h3 id="synopsis-6"><a class="header" href="#synopsis-6">Synopsis</a></h3>
+<p>Generate the autocompletion script for the zsh shell.</p>
+<p>If shell completion is not already enabled in your environment you will need
+to enable it.  You can execute the following once:</p>
+<pre><code>echo &quot;autoload -U compinit; compinit&quot; &gt;&gt; ~/.zshrc
+</code></pre>
+<p>To load completions in your current shell session:</p>
+<pre><code>source &lt;(sunbeam completion zsh)
+</code></pre>
+<p>To load completions for every new session, execute once:</p>
+<h4 id="linux-1"><a class="header" href="#linux-1">Linux:</a></h4>
+<pre><code>sunbeam completion zsh &gt; &quot;${fpath[1]}/_sunbeam&quot;
+</code></pre>
+<h4 id="macos-1"><a class="header" href="#macos-1">macOS:</a></h4>
+<pre><code>sunbeam completion zsh &gt; $(brew --prefix)/share/zsh/site-functions/_sunbeam
+</code></pre>
+<p>You will need to start a new shell for this setup to take effect.</p>
+<pre><code>sunbeam completion zsh [flags]
+</code></pre>
+<h3 id="options-6"><a class="header" href="#options-6">Options</a></h3>
+<pre><code>  -h, --help              help for zsh
+      --no-descriptions   disable completion descriptions
+</code></pre>
+<h2 id="sunbeam-docs"><a class="header" href="#sunbeam-docs">sunbeam docs</a></h2>
+<p>Generate documentation for sunbeam</p>
+<pre><code>sunbeam docs [flags]
+</code></pre>
+<h3 id="options-7"><a class="header" href="#options-7">Options</a></h3>
+<pre><code>  -h, --help   help for docs
+</code></pre>
+<h2 id="sunbeam-extension"><a class="header" href="#sunbeam-extension">sunbeam extension</a></h2>
+<p>Manage extensions</p>
+<h3 id="options-8"><a class="header" href="#options-8">Options</a></h3>
+<pre><code>  -h, --help   help for extension
+</code></pre>
+<h2 id="sunbeam-extension-edit"><a class="header" href="#sunbeam-extension-edit">sunbeam extension edit</a></h2>
+<p>Edit an extension</p>
+<pre><code>sunbeam extension edit [flags]
+</code></pre>
+<h3 id="options-9"><a class="header" href="#options-9">Options</a></h3>
+<pre><code>  -h, --help   help for edit
+</code></pre>
+<h2 id="sunbeam-extension-help"><a class="header" href="#sunbeam-extension-help">sunbeam extension help</a></h2>
+<p>Help about any command</p>
+<h3 id="synopsis-7"><a class="header" href="#synopsis-7">Synopsis</a></h3>
+<p>Help provides help for any command in the application.
+Simply type extension help [path to command] for full details.</p>
+<pre><code>sunbeam extension help [command] [flags]
+</code></pre>
+<h3 id="options-10"><a class="header" href="#options-10">Options</a></h3>
+<pre><code>  -h, --help   help for help
+</code></pre>
+<h2 id="sunbeam-extension-list"><a class="header" href="#sunbeam-extension-list">sunbeam extension list</a></h2>
+<p>List installed extensions</p>
+<pre><code>sunbeam extension list [flags]
+</code></pre>
+<h3 id="options-11"><a class="header" href="#options-11">Options</a></h3>
+<pre><code>  -h, --help   help for list
+</code></pre>
+<h2 id="sunbeam-fetch"><a class="header" href="#sunbeam-fetch">sunbeam fetch</a></h2>
+<p>Simple http client inspired by curl</p>
+<pre><code>sunbeam fetch &lt;url&gt; [body] [flags]
+</code></pre>
+<h3 id="options-12"><a class="header" href="#options-12">Options</a></h3>
+<pre><code>  -d, --data string          HTTP body to send. Use @- to read from stdin, or @&lt;file&gt; to read from a file.
+  -H, --header stringArray   HTTP headers to add to the request
+  -h, --help                 help for fetch
+  -X, --method string        HTTP method to use
+  -u, --user string          HTTP basic auth to use
+</code></pre>
+<h2 id="sunbeam-generate-man-pages"><a class="header" href="#sunbeam-generate-man-pages">sunbeam generate-man-pages</a></h2>
+<p>Generate Man Pages for sunbeam</p>
+<pre><code>sunbeam generate-man-pages [path] [flags]
+</code></pre>
+<h3 id="options-13"><a class="header" href="#options-13">Options</a></h3>
+<pre><code>  -h, --help   help for generate-man-pages
+</code></pre>
+<h2 id="sunbeam-help"><a class="header" href="#sunbeam-help">sunbeam help</a></h2>
+<p>Help about any command</p>
+<h3 id="synopsis-8"><a class="header" href="#synopsis-8">Synopsis</a></h3>
+<p>Help provides help for any command in the application.
+Simply type sunbeam help [path to command] for full details.</p>
+<pre><code>sunbeam help [command] [flags]
+</code></pre>
+<h3 id="options-14"><a class="header" href="#options-14">Options</a></h3>
+<pre><code>  -h, --help   help for help
+</code></pre>
+<h2 id="sunbeam-query"><a class="header" href="#sunbeam-query">sunbeam query</a></h2>
+<p>Transform or generate JSON using a jq query</p>
+<pre><code>sunbeam query &lt;query&gt; [file] [flags]
+</code></pre>
+<h3 id="options-15"><a class="header" href="#options-15">Options</a></h3>
+<pre><code>      --arg stringArray       add string variable in the form of name=value
+      --argjson stringArray   add JSON variable in the form of name=value
+  -h, --help                  help for query
+  -n, --null-input            use null as input value
+  -R, --raw-input             read input as raw strings
+  -r, --raw-output            output raw strings, not JSON texts
+  -s, --slurp                 read all inputs into an array
+</code></pre>
+<h2 id="sunbeam-run"><a class="header" href="#sunbeam-run">sunbeam run</a></h2>
+<p>Run an extension without installing it</p>
+<pre><code>sunbeam run &lt;origin&gt; [args...] [flags]
+</code></pre>
+<h3 id="options-16"><a class="header" href="#options-16">Options</a></h3>
+<pre><code>  -h, --help   help for run
+</code></pre>
+<h2 id="sunbeam-serve"><a class="header" href="#sunbeam-serve">sunbeam serve</a></h2>
+<p>Serve extensions over HTTP</p>
+<pre><code>sunbeam serve &lt;script&gt; [flags]
+</code></pre>
+<h3 id="options-17"><a class="header" href="#options-17">Options</a></h3>
+<pre><code>  -h, --help            help for serve
+  -H, --host string     Host to listen on (default &quot;localhost&quot;)
+  -p, --port int        Port to listen on (default 9999)
+      --token string    Bearer token to use for authentication
+      --without-token   Disable bearer token authentication
+</code></pre>
+<h2 id="sunbeam-validate"><a class="header" href="#sunbeam-validate">sunbeam validate</a></h2>
+<p>Validate a Sunbeam schema</p>
+<h3 id="options-18"><a class="header" href="#options-18">Options</a></h3>
+<pre><code>  -h, --help   help for validate
+</code></pre>
+<h2 id="sunbeam-validate-help"><a class="header" href="#sunbeam-validate-help">sunbeam validate help</a></h2>
+<p>Help about any command</p>
+<h3 id="synopsis-9"><a class="header" href="#synopsis-9">Synopsis</a></h3>
+<p>Help provides help for any command in the application.
+Simply type validate help [path to command] for full details.</p>
+<pre><code>sunbeam validate help [command] [flags]
+</code></pre>
+<h3 id="options-19"><a class="header" href="#options-19">Options</a></h3>
+<pre><code>  -h, --help   help for help
+</code></pre>
+<h2 id="sunbeam-validate-manifest"><a class="header" href="#sunbeam-validate-manifest">sunbeam validate manifest</a></h2>
+<p>Validate a manifest</p>
+<pre><code>sunbeam validate manifest [flags]
+</code></pre>
+<h3 id="options-20"><a class="header" href="#options-20">Options</a></h3>
+<pre><code>  -h, --help   help for manifest
+</code></pre>
+<h2 id="sunbeam-validate-page"><a class="header" href="#sunbeam-validate-page">sunbeam validate page</a></h2>
+<p>Validate a page</p>
+<pre><code>sunbeam validate page [flags]
+</code></pre>
+<h3 id="options-21"><a class="header" href="#options-21">Options</a></h3>
+<pre><code>  -h, --help   help for page
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="alternatives"><a class="header" href="#alternatives">Alternatives</a></h2>
+<p>Sunbeam wouldn't exist without taking inspirations from these incredible tools.</p>
+<p>Make sure to check them out, they might be a better fit for your use case:</p>
+<ul>
+<li><a href="https://raycast.com">raycast</a>: Sunbeam shamelessly copy most of raycast UX, and nomenclature in it's api. Even the project name is a reference to raycast.</li>
+<li><a href="https://github.com/junegunn/fzf">fzf</a>: Sunbeam tries to take inspiration from fzf, but it's not a drop-in replacement. Sunbeam is designed to be used as a launcher, not as a fuzzy finder.</li>
+<li><a href="https://www.scriptkit.com">kit</a>: Kit also focus on scripting. The plugins are primarily written in javascript.</li>
+<li><a href="https://slapdash.com">slapdash</a>: Slapdash feature-set is quite close to sunbeam. Sadly, slapdash development seems to be stalled, and it's not open source.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

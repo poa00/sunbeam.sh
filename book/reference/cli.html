@@ -1,0 +1,438 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js oranda-dark">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>CLI - Sunbeam Documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Generate complex TUIs from simple scripts written in any language.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+        <link rel="stylesheet" href="../oranda-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "oranda-dark" : "oranda-dark";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('orandamdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('orandamdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('orandamdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('oranda-dark')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">User Guide</li><li class="chapter-item expanded "><a href="../user-guide/installation.html"><strong aria-hidden="true">1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../user-guide/quickstart.html"><strong aria-hidden="true">2.</strong> Quickstart</a></li><li class="chapter-item expanded "><a href="../user-guide/integrations.html"><strong aria-hidden="true">3.</strong> Integrations</a></li><li class="chapter-item expanded affix "><li class="part-title">Developer Guide</li><li class="chapter-item expanded "><a href="../developer-guide/script-extensions.html"><strong aria-hidden="true">4.</strong> Writing your first Extension</a></li><li class="chapter-item expanded "><a href="../developer-guide/leveraging-shebangs.html"><strong aria-hidden="true">5.</strong> Leveraging Shebangs</a></li><li class="chapter-item expanded "><a href="../developer-guide/handling-dependencies.html"><strong aria-hidden="true">6.</strong> Handling Dependencies</a></li><li class="chapter-item expanded affix "><li class="part-title">Reference</li><li class="chapter-item expanded "><a href="../reference/schemas/config.html"><strong aria-hidden="true">7.</strong> Config</a></li><li class="chapter-item expanded "><a href="../reference/schemas/index.html"><strong aria-hidden="true">8.</strong> Schema</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/schemas/manifest.html"><strong aria-hidden="true">8.1.</strong> Manifest</a></li><li class="chapter-item expanded "><a href="../reference/schemas/list.html"><strong aria-hidden="true">8.2.</strong> List</a></li><li class="chapter-item expanded "><a href="../reference/schemas/detail.html"><strong aria-hidden="true">8.3.</strong> Detail</a></li><li class="chapter-item expanded "><a href="../reference/schemas/action.html"><strong aria-hidden="true">8.4.</strong> Action</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/cli.html" class="active"><strong aria-hidden="true">9.</strong> CLI</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="../alternatives.html"><strong aria-hidden="true">10.</strong> Alternatives</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="oranda-dark">Axo Dark</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="oranda-light">Axo Light</button></li>
+
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Sunbeam Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/pomdtr/sunbeam" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/pomdtr/sunbeam/edit/main/docs/reference/cli.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="sunbeam"><a class="header" href="#sunbeam">sunbeam</a></h2>
+<p>Command Line Launcher</p>
+<h3 id="synopsis"><a class="header" href="#synopsis">Synopsis</a></h3>
+<p>Sunbeam is a command line launcher for your terminal, inspired by fzf and raycast.</p>
+<p>See https://pomdtr.github.io/sunbeam for more information.</p>
+<pre><code>sunbeam [flags]
+</code></pre>
+<h3 id="options"><a class="header" href="#options">Options</a></h3>
+<pre><code>  -h, --help   help for sunbeam
+</code></pre>
+<h2 id="sunbeam-completion"><a class="header" href="#sunbeam-completion">sunbeam completion</a></h2>
+<p>Generate the autocompletion script for the specified shell</p>
+<h3 id="synopsis-1"><a class="header" href="#synopsis-1">Synopsis</a></h3>
+<p>Generate the autocompletion script for sunbeam for the specified shell.
+See each sub-command's help for details on how to use the generated script.</p>
+<h3 id="options-1"><a class="header" href="#options-1">Options</a></h3>
+<pre><code>  -h, --help   help for completion
+</code></pre>
+<h2 id="sunbeam-completion-bash"><a class="header" href="#sunbeam-completion-bash">sunbeam completion bash</a></h2>
+<p>Generate the autocompletion script for bash</p>
+<h3 id="synopsis-2"><a class="header" href="#synopsis-2">Synopsis</a></h3>
+<p>Generate the autocompletion script for the bash shell.</p>
+<p>This script depends on the 'bash-completion' package.
+If it is not installed already, you can install it via your OS's package manager.</p>
+<p>To load completions in your current shell session:</p>
+<pre><code>source &lt;(sunbeam completion bash)
+</code></pre>
+<p>To load completions for every new session, execute once:</p>
+<h4 id="linux"><a class="header" href="#linux">Linux:</a></h4>
+<pre><code>sunbeam completion bash &gt; /etc/bash_completion.d/sunbeam
+</code></pre>
+<h4 id="macos"><a class="header" href="#macos">macOS:</a></h4>
+<pre><code>sunbeam completion bash &gt; $(brew --prefix)/etc/bash_completion.d/sunbeam
+</code></pre>
+<p>You will need to start a new shell for this setup to take effect.</p>
+<pre><code>sunbeam completion bash
+</code></pre>
+<h3 id="options-2"><a class="header" href="#options-2">Options</a></h3>
+<pre><code>  -h, --help              help for bash
+      --no-descriptions   disable completion descriptions
+</code></pre>
+<h2 id="sunbeam-completion-fish"><a class="header" href="#sunbeam-completion-fish">sunbeam completion fish</a></h2>
+<p>Generate the autocompletion script for fish</p>
+<h3 id="synopsis-3"><a class="header" href="#synopsis-3">Synopsis</a></h3>
+<p>Generate the autocompletion script for the fish shell.</p>
+<p>To load completions in your current shell session:</p>
+<pre><code>sunbeam completion fish | source
+</code></pre>
+<p>To load completions for every new session, execute once:</p>
+<pre><code>sunbeam completion fish &gt; ~/.config/fish/completions/sunbeam.fish
+</code></pre>
+<p>You will need to start a new shell for this setup to take effect.</p>
+<pre><code>sunbeam completion fish [flags]
+</code></pre>
+<h3 id="options-3"><a class="header" href="#options-3">Options</a></h3>
+<pre><code>  -h, --help              help for fish
+      --no-descriptions   disable completion descriptions
+</code></pre>
+<h2 id="sunbeam-completion-help"><a class="header" href="#sunbeam-completion-help">sunbeam completion help</a></h2>
+<p>Help about any command</p>
+<h3 id="synopsis-4"><a class="header" href="#synopsis-4">Synopsis</a></h3>
+<p>Help provides help for any command in the application.
+Simply type completion help [path to command] for full details.</p>
+<pre><code>sunbeam completion help [command] [flags]
+</code></pre>
+<h3 id="options-4"><a class="header" href="#options-4">Options</a></h3>
+<pre><code>  -h, --help   help for help
+</code></pre>
+<h2 id="sunbeam-completion-powershell"><a class="header" href="#sunbeam-completion-powershell">sunbeam completion powershell</a></h2>
+<p>Generate the autocompletion script for powershell</p>
+<h3 id="synopsis-5"><a class="header" href="#synopsis-5">Synopsis</a></h3>
+<p>Generate the autocompletion script for powershell.</p>
+<p>To load completions in your current shell session:</p>
+<pre><code>sunbeam completion powershell | Out-String | Invoke-Expression
+</code></pre>
+<p>To load completions for every new session, add the output of the above command
+to your powershell profile.</p>
+<pre><code>sunbeam completion powershell [flags]
+</code></pre>
+<h3 id="options-5"><a class="header" href="#options-5">Options</a></h3>
+<pre><code>  -h, --help              help for powershell
+      --no-descriptions   disable completion descriptions
+</code></pre>
+<h2 id="sunbeam-completion-zsh"><a class="header" href="#sunbeam-completion-zsh">sunbeam completion zsh</a></h2>
+<p>Generate the autocompletion script for zsh</p>
+<h3 id="synopsis-6"><a class="header" href="#synopsis-6">Synopsis</a></h3>
+<p>Generate the autocompletion script for the zsh shell.</p>
+<p>If shell completion is not already enabled in your environment you will need
+to enable it.  You can execute the following once:</p>
+<pre><code>echo &quot;autoload -U compinit; compinit&quot; &gt;&gt; ~/.zshrc
+</code></pre>
+<p>To load completions in your current shell session:</p>
+<pre><code>source &lt;(sunbeam completion zsh)
+</code></pre>
+<p>To load completions for every new session, execute once:</p>
+<h4 id="linux-1"><a class="header" href="#linux-1">Linux:</a></h4>
+<pre><code>sunbeam completion zsh &gt; &quot;${fpath[1]}/_sunbeam&quot;
+</code></pre>
+<h4 id="macos-1"><a class="header" href="#macos-1">macOS:</a></h4>
+<pre><code>sunbeam completion zsh &gt; $(brew --prefix)/share/zsh/site-functions/_sunbeam
+</code></pre>
+<p>You will need to start a new shell for this setup to take effect.</p>
+<pre><code>sunbeam completion zsh [flags]
+</code></pre>
+<h3 id="options-6"><a class="header" href="#options-6">Options</a></h3>
+<pre><code>  -h, --help              help for zsh
+      --no-descriptions   disable completion descriptions
+</code></pre>
+<h2 id="sunbeam-docs"><a class="header" href="#sunbeam-docs">sunbeam docs</a></h2>
+<p>Generate documentation for sunbeam</p>
+<pre><code>sunbeam docs [flags]
+</code></pre>
+<h3 id="options-7"><a class="header" href="#options-7">Options</a></h3>
+<pre><code>  -h, --help   help for docs
+</code></pre>
+<h2 id="sunbeam-extension"><a class="header" href="#sunbeam-extension">sunbeam extension</a></h2>
+<p>Manage extensions</p>
+<h3 id="options-8"><a class="header" href="#options-8">Options</a></h3>
+<pre><code>  -h, --help   help for extension
+</code></pre>
+<h2 id="sunbeam-extension-edit"><a class="header" href="#sunbeam-extension-edit">sunbeam extension edit</a></h2>
+<p>Edit an extension</p>
+<pre><code>sunbeam extension edit [flags]
+</code></pre>
+<h3 id="options-9"><a class="header" href="#options-9">Options</a></h3>
+<pre><code>  -h, --help   help for edit
+</code></pre>
+<h2 id="sunbeam-extension-help"><a class="header" href="#sunbeam-extension-help">sunbeam extension help</a></h2>
+<p>Help about any command</p>
+<h3 id="synopsis-7"><a class="header" href="#synopsis-7">Synopsis</a></h3>
+<p>Help provides help for any command in the application.
+Simply type extension help [path to command] for full details.</p>
+<pre><code>sunbeam extension help [command] [flags]
+</code></pre>
+<h3 id="options-10"><a class="header" href="#options-10">Options</a></h3>
+<pre><code>  -h, --help   help for help
+</code></pre>
+<h2 id="sunbeam-extension-list"><a class="header" href="#sunbeam-extension-list">sunbeam extension list</a></h2>
+<p>List installed extensions</p>
+<pre><code>sunbeam extension list [flags]
+</code></pre>
+<h3 id="options-11"><a class="header" href="#options-11">Options</a></h3>
+<pre><code>  -h, --help   help for list
+</code></pre>
+<h2 id="sunbeam-fetch"><a class="header" href="#sunbeam-fetch">sunbeam fetch</a></h2>
+<p>Simple http client inspired by curl</p>
+<pre><code>sunbeam fetch &lt;url&gt; [body] [flags]
+</code></pre>
+<h3 id="options-12"><a class="header" href="#options-12">Options</a></h3>
+<pre><code>  -d, --data string          HTTP body to send. Use @- to read from stdin, or @&lt;file&gt; to read from a file.
+  -H, --header stringArray   HTTP headers to add to the request
+  -h, --help                 help for fetch
+  -X, --method string        HTTP method to use
+  -u, --user string          HTTP basic auth to use
+</code></pre>
+<h2 id="sunbeam-generate-man-pages"><a class="header" href="#sunbeam-generate-man-pages">sunbeam generate-man-pages</a></h2>
+<p>Generate Man Pages for sunbeam</p>
+<pre><code>sunbeam generate-man-pages [path] [flags]
+</code></pre>
+<h3 id="options-13"><a class="header" href="#options-13">Options</a></h3>
+<pre><code>  -h, --help   help for generate-man-pages
+</code></pre>
+<h2 id="sunbeam-help"><a class="header" href="#sunbeam-help">sunbeam help</a></h2>
+<p>Help about any command</p>
+<h3 id="synopsis-8"><a class="header" href="#synopsis-8">Synopsis</a></h3>
+<p>Help provides help for any command in the application.
+Simply type sunbeam help [path to command] for full details.</p>
+<pre><code>sunbeam help [command] [flags]
+</code></pre>
+<h3 id="options-14"><a class="header" href="#options-14">Options</a></h3>
+<pre><code>  -h, --help   help for help
+</code></pre>
+<h2 id="sunbeam-query"><a class="header" href="#sunbeam-query">sunbeam query</a></h2>
+<p>Transform or generate JSON using a jq query</p>
+<pre><code>sunbeam query &lt;query&gt; [file] [flags]
+</code></pre>
+<h3 id="options-15"><a class="header" href="#options-15">Options</a></h3>
+<pre><code>      --arg stringArray       add string variable in the form of name=value
+      --argjson stringArray   add JSON variable in the form of name=value
+  -h, --help                  help for query
+  -n, --null-input            use null as input value
+  -R, --raw-input             read input as raw strings
+  -r, --raw-output            output raw strings, not JSON texts
+  -s, --slurp                 read all inputs into an array
+</code></pre>
+<h2 id="sunbeam-run"><a class="header" href="#sunbeam-run">sunbeam run</a></h2>
+<p>Run an extension without installing it</p>
+<pre><code>sunbeam run &lt;origin&gt; [args...] [flags]
+</code></pre>
+<h3 id="options-16"><a class="header" href="#options-16">Options</a></h3>
+<pre><code>  -h, --help   help for run
+</code></pre>
+<h2 id="sunbeam-serve"><a class="header" href="#sunbeam-serve">sunbeam serve</a></h2>
+<p>Serve extensions over HTTP</p>
+<pre><code>sunbeam serve &lt;script&gt; [flags]
+</code></pre>
+<h3 id="options-17"><a class="header" href="#options-17">Options</a></h3>
+<pre><code>  -h, --help            help for serve
+  -H, --host string     Host to listen on (default &quot;localhost&quot;)
+  -p, --port int        Port to listen on (default 9999)
+      --token string    Bearer token to use for authentication
+      --without-token   Disable bearer token authentication
+</code></pre>
+<h2 id="sunbeam-validate"><a class="header" href="#sunbeam-validate">sunbeam validate</a></h2>
+<p>Validate a Sunbeam schema</p>
+<h3 id="options-18"><a class="header" href="#options-18">Options</a></h3>
+<pre><code>  -h, --help   help for validate
+</code></pre>
+<h2 id="sunbeam-validate-help"><a class="header" href="#sunbeam-validate-help">sunbeam validate help</a></h2>
+<p>Help about any command</p>
+<h3 id="synopsis-9"><a class="header" href="#synopsis-9">Synopsis</a></h3>
+<p>Help provides help for any command in the application.
+Simply type validate help [path to command] for full details.</p>
+<pre><code>sunbeam validate help [command] [flags]
+</code></pre>
+<h3 id="options-19"><a class="header" href="#options-19">Options</a></h3>
+<pre><code>  -h, --help   help for help
+</code></pre>
+<h2 id="sunbeam-validate-manifest"><a class="header" href="#sunbeam-validate-manifest">sunbeam validate manifest</a></h2>
+<p>Validate a manifest</p>
+<pre><code>sunbeam validate manifest [flags]
+</code></pre>
+<h3 id="options-20"><a class="header" href="#options-20">Options</a></h3>
+<pre><code>  -h, --help   help for manifest
+</code></pre>
+<h2 id="sunbeam-validate-page"><a class="header" href="#sunbeam-validate-page">sunbeam validate page</a></h2>
+<p>Validate a page</p>
+<pre><code>sunbeam validate page [flags]
+</code></pre>
+<h3 id="options-21"><a class="header" href="#options-21">Options</a></h3>
+<pre><code>  -h, --help   help for page
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../reference/schemas/action.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../alternatives.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../reference/schemas/action.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../alternatives.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
